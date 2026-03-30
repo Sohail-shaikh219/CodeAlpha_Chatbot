@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Smart Chatbot</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 400px;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .messages {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .user {
+            text-align: right;
+            margin: 5px;
+        }
+
+        .bot {
+            text-align: left;
+            margin: 5px;
+            color: #38bdf8;
+        }
+
+        input {
+            width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        button {
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: #38bdf8;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="chat-container">
+        <h2>🤖 Sohail Chatbot</h2>
+
+        <div class="messages" id="messages"></div>
+
+        <input type="text" id="userInput" placeholder="Type message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let input = document.getElementById("userInput").value;
+
+            let msgBox = document.getElementById("messages");
+            msgBox.innerHTML += `<div class='user'>${input}</div>`;
+
+            fetch("/get", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: input })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    msgBox.innerHTML += `<div class='bot'>${data.response}</div>`;
+                    msgBox.scrollTop = msgBox.scrollHeight;
+                });
+
+            document.getElementById("userInput").value = "";
+        }
+    </script>
+
+</body>
+
+</html>
