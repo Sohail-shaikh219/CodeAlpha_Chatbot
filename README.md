@@ -14,6 +14,3 @@ Available at your primary URL https://chatbot-qr7v.onrender.com
 - Python (Flask)
 - HTML, CSS, JavaScript
 - Render (Cloud Hosting)
-
-## 📌 Author
-Sohail Shaikh
